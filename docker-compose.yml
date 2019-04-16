@@ -1,0 +1,39 @@
+version: '3'
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    
+  app1:
+    container_name: apiservice1
+    restart: always
+    image: hrshsunny7/api_service1:firsttry
+    links:
+       - mongo
+  
+  app2:
+    container_name: apiservice2
+    restart: always
+    image: hrshsunny7/api_service2:firsttry
+    links:
+        - mongo
+  
+  app3:
+    container_name: apiservice3
+    restart: always
+    image: hrshsunny7/api_service3:firsttry
+    links:
+       - mongo
+  
+  loadba:
+    container_name: loadbalancer
+    restart: always
+    image: hrshsunny7/loadbalancer:firsttry
+    ports:
+      - "5050:5050"
+    links:
+       - app1
+       - app2
+       - app3
+   
+    
